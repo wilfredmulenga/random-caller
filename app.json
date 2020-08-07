@@ -1,0 +1,12 @@
+{
+  "name": "callme",
+  "displayName": "callme",
+  "expo": {
+    "name": "callme",
+    "slug": "callme",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
