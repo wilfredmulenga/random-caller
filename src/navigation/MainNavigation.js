@@ -10,7 +10,7 @@ export default function MainNavigation () {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="screen" >
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Call Me" component={Home} />
         <Stack.Screen name="Contacts" component={RandomContacts} />
       </Stack.Navigator>
     </NavigationContainer>
