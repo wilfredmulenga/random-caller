@@ -1,39 +1,13 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import * as Contacts from 'expo-contacts';
-import Button from './components/Button'
-import { main } from './common/appStyles'
+import React from 'react'
+import { GlobalContextProvider } from './src/context/globalContext'
+import MainNavigation from './src/navigation/MainNavigation'
 
-export default function App() {
-  useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status === 'granted') {
-        const { data } = await Contacts.getContactsAsync();
-
-        if (data.length > 0) {
-          const contact = data[0];
-          console.log(contact.name, contact.phoneNumbers[0].number);
-        }
-      }
-    })();
-  }, []);
-
+function App () {
   return (
-    <View
-      style={styles.main}>
-      <Text>Randomly select three people to call</Text>
-      <Button 
-      text="Start"
-      animating={false}
-      />
-    </View>
-  );
+    <GlobalContextProvider>
+      <MainNavigation/>
+    </GlobalContextProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  main: {
-    ...main,
-    justifyContent: 'space-around'
-  }
-})
+export default App
