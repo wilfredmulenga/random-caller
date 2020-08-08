@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import * as Contacts from 'expo-contacts';
+import Button from './components/Button'
+import { main } from './common/appStyles'
 
 export default function App() {
+  useEffect(() => {
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status === 'granted') {
+        const { data } = await Contacts.getContactsAsync();
+
+        if (data.length > 0) {
+          const contact = data[0];
+          console.log(contact.name, contact.phoneNumbers[0].number);
+        }
+      }
+    })();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View
+      style={styles.main}>
+      <Text>Randomly select three people to call</Text>
+      <Button 
+      text="Start"
+      animating={false}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  main: {
+    ...main,
+    justifyContent: 'space-around'
+  }
+})
