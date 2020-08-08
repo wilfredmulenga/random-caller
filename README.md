@@ -1,5 +1,5 @@
 # Call Me
-App that gives you a random list of people to call from your contact list
+A mobile app that helps you randomly pick three people from your contacts to call 
 
 ## Development
 This project was built with [Expo](https://expo.io/). To run in development:
