@@ -1,25 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import * as Contacts from 'expo-contacts'
 import { Text } from 'react-native-elements'
 import Button from './Button'
 import { main } from '../common/appStyles'
 
-export default function App () {
-  useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync()
-      if (status === 'granted') {
-        const { data } = await Contacts.getContactsAsync()
-
-        if (data.length > 0) {
-          const contact = data[0]
-          console.log(contact.name, contact.phoneNumbers[0].number)
-        }
-      }
-    })()
-  }, [])
-
+export default function Home ({ navigation }) {
   return (
     <View
       style={styles.main}>
@@ -27,6 +12,7 @@ export default function App () {
       <Button
         text="Start"
         animating={false}
+        handleClick={() => navigation.navigate('Contacts') }
       />
     </View>
   )
