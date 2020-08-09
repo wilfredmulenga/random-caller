@@ -1,11 +1,14 @@
 import * as Linking from 'expo-linking'
 import { Alert } from 'react-native'
 export const randomlySelectThreeItems = (array, num) => {
-  // Shuffle array
-  const shuffled = array.sort(() => 0.5 - Math.random())
+  const indexArr = []
 
-  // Get sub-array of first n elements after shuffled
-  const selected = shuffled.slice(0, num)
+  while (indexArr.length < num) {
+    const index = Math.floor(Math.random() * Math.floor(array.length))
+    if (!indexArr.includes(index)) indexArr.push(index)
+  }
+
+  const selected = indexArr.map((item, index) => array[item])
   return selected
 }
 
