@@ -4,15 +4,17 @@ import { Text, Input } from 'react-native-elements'
 import * as Contacts from 'expo-contacts'
 import Button from './Button'
 import { main } from '../common/appStyles'
+import { BLACK } from '../common/appColors'
 
 export default function Home ({ navigation }) {
   const [randomNum, setRandomNum] = useState('3')
   const [errorMessage, setErrorMessage] = useState('')
+  const [showIntro, setShowIntro] = useState(true)
 
-  const handleClick = async () => {
+  const handleGetStartedClick = async () => {
     const { status } = await Contacts.requestPermissionsAsync()
     if (status === 'granted') {
-      return navigation.navigate('Contacts')
+      return setShowIntro(false)
     }
     if (status === 'denied') {
       contactPermissionsDeniedAlert()
@@ -25,7 +27,7 @@ export default function Home ({ navigation }) {
     const btn = [
       {
         text: 'Ask me again',
-        onPress: async () => handleClick()
+        onPress: async () => handleGetStartedClick()
       }
     ]
     return (
@@ -43,7 +45,7 @@ export default function Home ({ navigation }) {
       <Button
         text="Get Started"
         animating={false}
-        handleClick={() => handleClick() }
+        handleClick={() => handleGetStartedClick() }
       />
     </>
   )
@@ -58,14 +60,31 @@ export default function Home ({ navigation }) {
     setErrorMessage('')
   }
 
+  const onSubmit = () => {
+    navigation.navigate('Contacts', { randomNum: Number(randomNum) })
+  }
   return (
     <View style={styles.main}>
-      <Input
-        label="Choose random number of people to call"
-        value={randomNum}
-        onChangeText={(text) => handleInputFieldChange(text)}
-        errorMessage={errorMessage}
-      />
+      {
+        showIntro
+          ? <IntroductionView />
+          : (
+            <>
+              <Input
+                label="Choose random number of people to call"
+                labelStyle={styles.labelStyle}
+                value={randomNum}
+                onChangeText={(text) => handleInputFieldChange(text)}
+                errorMessage={errorMessage}
+              />
+              <Button
+                text="Submit"
+                animating={false}
+                handleClick={() => onSubmit() }
+              />
+            </>
+          )
+      }
     </View>
   )
 }
@@ -82,5 +101,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     textAlign: 'center'
+  },
+  labelStyle: {
+    color: BLACK,
+    fontWeight: 'normal'
   }
 })

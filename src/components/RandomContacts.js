@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, FlatList, Text, Alert } from 'react-native'
+import { View, StyleSheet, FlatList, Text } from 'react-native'
 import * as Contacts from 'expo-contacts'
 import { ListItem, Card } from 'react-native-elements'
 
@@ -9,16 +9,17 @@ import { randomlySelectThreeItems } from '../common/helpers'
 import { main } from '../common/appStyles'
 import { LIGHT_GREY } from '../common/appColors'
 
-const RandomContacts = ({ navigation }) => {
+const RandomContacts = ({ route, navigation }) => {
   const [randomlySelected, setRandomlySelected] = useState(null)
   const [selectedContact, setSelectedContact] = useState(null)
   const [isModalOpen, setModalOpen] = useState(false)
+  const { randomNum } = route.params
 
   useEffect(() => {
     (async () => {
       const { data } = await Contacts.getContactsAsync()
       if (data.length > 0) {
-        const result = randomlySelectThreeItems(data, 3)
+        const result = randomlySelectThreeItems(data, randomNum)
         setRandomlySelected(result)
       }
     })()
