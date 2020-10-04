@@ -95,7 +95,7 @@ function Home ({ navigation, global }) {
               <View style={styles.buttonWrapper}>
                 <Button
                   text="Submit"
-                  disabled={!!errorMessage}
+                  disabled={!!errorMessage || !randomNum}
                   animating={false}
                   handleClick={() => onSubmit() }
                 />
