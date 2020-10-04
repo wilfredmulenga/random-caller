@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { withGlobalContext } from '../context/globalContext'
 import { View, StyleSheet, Alert } from 'react-native'
 import { Text, Input } from 'react-native-elements'
 import * as Contacts from 'expo-contacts'
@@ -6,14 +7,20 @@ import Button from './Button'
 import { main } from '../common/appStyles'
 import { BLACK } from '../common/appColors'
 
-export default function Home ({ navigation }) {
+function Home ({ navigation, global }) {
   const [randomNum, setRandomNum] = useState('3')
   const [errorMessage, setErrorMessage] = useState('')
   const [showIntro, setShowIntro] = useState(true)
+  const { updateState, data: globalState } = global
 
   const handleGetStartedClick = async () => {
     const { status } = await Contacts.requestPermissionsAsync()
     if (status === 'granted') {
+      const { data } = await Contacts.getContactsAsync()
+      if (data.length > 0) {
+        updateState('contacts', data)
+      }
+
       return setShowIntro(false)
     }
     if (status === 'denied') {
@@ -42,18 +49,26 @@ export default function Home ({ navigation }) {
         <Text style={styles.title} h4>Hi 👋</Text>
         <Text style={styles.subtitle}>I'm going to help you randomly select people from your contacts to call and re-connect with. </Text>
       </View>
-      <Button
-        text="Get Started"
-        animating={false}
-        handleClick={() => handleGetStartedClick() }
-      />
+      <View style={styles.buttonWrapper}>
+        <Button
+          text="Get Started"
+          animating={false}
+          handleClick={() => handleGetStartedClick() }
+        />
+      </View>
     </>
   )
 
   const handleInputFieldChange = (text) => {
+    const { contacts } = globalState
     if (isNaN(text)) {
       setRandomNum('')
       return setErrorMessage('Please enter a number')
+    }
+    const randomNum = Number(text)
+    if (randomNum > contacts.length) {
+      setRandomNum(text)
+      return setErrorMessage('Cannot choose a number more than number of contacts')
     }
 
     setRandomNum(text)
@@ -80,6 +95,7 @@ export default function Home ({ navigation }) {
               <View style={styles.buttonWrapper}>
                 <Button
                   text="Submit"
+                  disabled={!!errorMessage}
                   animating={false}
                   handleClick={() => onSubmit() }
                 />
@@ -113,3 +129,5 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 })
+
+export default withGlobalContext(Home)

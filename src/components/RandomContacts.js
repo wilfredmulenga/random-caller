@@ -7,7 +7,7 @@ import Button from './Button'
 import CallModal from '../components/CallModal'
 import Loader from '../components/Loader'
 import { randomlySelectThreeItems } from '../common/helpers'
-import { main } from '../common/appStyles'
+import { errorMessage, main } from '../common/appStyles'
 import { LIGHT_GREY } from '../common/appColors'
 
 const RandomContacts = ({ route, navigation }) => {
