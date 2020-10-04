@@ -40,7 +40,7 @@ export default function Home ({ navigation }) {
     <>
       <View>
         <Text style={styles.title} h4>Hi 👋</Text>
-        <Text style={styles.subtitle}>I'm going to help you randomly select three people from your contacts to call and re-connect with. </Text>
+        <Text style={styles.subtitle}>I'm going to help you randomly select people from your contacts to call and re-connect with. </Text>
       </View>
       <Button
         text="Get Started"
@@ -77,11 +77,13 @@ export default function Home ({ navigation }) {
                 onChangeText={(text) => handleInputFieldChange(text)}
                 errorMessage={errorMessage}
               />
-              <Button
-                text="Submit"
-                animating={false}
-                handleClick={() => onSubmit() }
-              />
+              <View style={styles.buttonWrapper}>
+                <Button
+                  text="Submit"
+                  animating={false}
+                  handleClick={() => onSubmit() }
+                />
+              </View>
             </>
           )
       }
@@ -105,5 +107,9 @@ const styles = StyleSheet.create({
   labelStyle: {
     color: BLACK,
     fontWeight: 'normal'
+  },
+  buttonWrapper: {
+    display: 'flex',
+    alignItems: 'center'
   }
 })

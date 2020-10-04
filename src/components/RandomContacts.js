@@ -3,6 +3,7 @@ import { View, StyleSheet, FlatList, Text } from 'react-native'
 import * as Contacts from 'expo-contacts'
 import { ListItem, Card } from 'react-native-elements'
 
+import Button from './Button'
 import CallModal from '../components/CallModal'
 import Loader from '../components/Loader'
 import { randomlySelectThreeItems } from '../common/helpers'
@@ -15,14 +16,16 @@ const RandomContacts = ({ route, navigation }) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const { randomNum } = route.params
 
+  const randomlySelectContacts = async () => {
+    const { data } = await Contacts.getContactsAsync()
+    if (data.length > 0) {
+      const result = randomlySelectThreeItems(data, randomNum)
+      setRandomlySelected(result)
+    }
+  }
+
   useEffect(() => {
-    (async () => {
-      const { data } = await Contacts.getContactsAsync()
-      if (data.length > 0) {
-        const result = randomlySelectThreeItems(data, randomNum)
-        setRandomlySelected(result)
-      }
-    })()
+    randomlySelectContacts()
   }, [])
 
   const onContactSelect = (item) => {
@@ -62,6 +65,13 @@ const RandomContacts = ({ route, navigation }) => {
           />
         }
       </Card>
+      <View style={styles.buttonWrapper}>
+        <Button
+          text="Pick again"
+          animating={false}
+          handleClick={() => randomlySelectContacts() }
+        />
+      </View>
       {
         selectedContact &&
         <CallModal
@@ -83,7 +93,7 @@ const styles = StyleSheet.create({
   main: {
     ...main,
     backgroundColor: LIGHT_GREY,
-    justifyContent: 'flex-start'
+    justifyContent: 'space-around'
   },
   loaderWrapper: {
     ...main,
@@ -94,6 +104,10 @@ const styles = StyleSheet.create({
   loaderText: {
     fontSize: 18,
     marginVertical: 20
+  },
+  buttonWrapper: {
+    display: 'flex',
+    alignItems: 'center'
   }
 })
 
