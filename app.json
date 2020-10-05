@@ -1,15 +1,15 @@
 {
-  "name": "callme",
-  "displayName": "callme",
+  "name": "random caller",
+  "displayName": "Random Caller",
   "expo": {
-    "name": "callme",
-    "slug": "callme",
+    "name": "randomcaller",
+    "slug": "randomcaller",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ],
     "android": {
-      "package": "com.willzmu.callme"
+      "package": "com.willzmu.randomcaller"
     }
   }
 }

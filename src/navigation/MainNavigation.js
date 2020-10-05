@@ -9,8 +9,8 @@ const Stack = createStackNavigator()
 export default function MainNavigation () {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="screen" >
-        <Stack.Screen name="Call Me" component={Home} />
+      <Stack.Navigator headerMode="none" >
+        <Stack.Screen name="Random Caller" component={Home} />
         <Stack.Screen name="Contacts" component={RandomContacts} />
       </Stack.Navigator>
     </NavigationContainer>
