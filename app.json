@@ -2,7 +2,7 @@
   "name": "random caller",
   "displayName": "Random Caller",
   "expo": {
-    "name": "randomcaller",
+    "name": "Random Caller",
     "slug": "randomcaller",
     "version": "1.0.0",
     "assetBundlePatterns": [
@@ -11,5 +11,11 @@
     "android": {
       "package": "com.willzmu.randomcaller"
     }
+  },
+  "icon": "./assets/random-caller-app-icon.png",
+  "splash": {
+    "image": "./assets/random-caller-app-icon.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#000"
   }
 }

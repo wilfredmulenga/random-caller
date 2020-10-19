@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   },
   loaderWrapper: {
     ...main,
+    marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: LIGHT_GREY
